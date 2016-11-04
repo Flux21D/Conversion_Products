@@ -96,6 +96,7 @@ function cssRead(htmlFile, filename){
 	var finalCSSContent = '';
 	var content = readfile(htmlFile);
 	var matchedArray = content.toString().match(/<span class="_ _[0-9A-z]+"\/>/g);
+	//content = content.toString().replace(/<span class="_ _[0-9A-z]+"\/>/g,'');
 	if(matchedArray){
 		for(var z=0; z<matchedArray.length; z++){
 			content = content.toString().replace(matchedArray[z],matchedArray[z].toString().replace('\/>','>') + ' ' + '</span>');
@@ -136,13 +137,19 @@ function cssRead(htmlFile, filename){
 				});
 				$('body').find('div#page-container').find('span').each(function (index,element){
 					var spanClassArray = [];
-					for(var i=0; i<$(this).attr('class').split(' ').length; i++){
-						spanClassArray.push($(this).attr('class').split(' ')[i]);
+					if($(this).text == ' '){
+						$(this).remove();
 					}
-					$(this).attr('class',prefix + '_wordStyle'  + (index+1));
-					var uniqueSpanClassNames = spanClassArray.filter( onlyUnique );
-					var spanStyles = cssCleanup(cssFile,uniqueSpanClassNames,htmlFileName);
-					finalCSSContent = finalCSSContent + '\r\n' + '.' + prefix + '_wordStyle'  + (index+1) + ' {\r\n' + spanStyles + '\r\n}'
+					else{
+						for(var i=0; i<$(this).attr('class').split(' ').length; i++){
+							spanClassArray.push($(this).attr('class').split(' ')[i]);
+						}
+						
+						$(this).attr('class',prefix + '_wordStyle'  + (index+1));
+						var uniqueSpanClassNames = spanClassArray.filter( onlyUnique );
+						var spanStyles = cssCleanup(cssFile,uniqueSpanClassNames,htmlFileName);
+						finalCSSContent = finalCSSContent + '\r\n' + '.' + prefix + '_wordStyle'  + (index+1) + ' {\r\n' + spanStyles + '\r\n}'
+					}
 				});
 			}
 		}

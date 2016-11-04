@@ -26,4 +26,8 @@ for %%f in (%1\*.pdf) do (
   del "%~dp0%%~nf.pdf"
   
   echo "------------- %~dp0%%~nf.pdf PDF file has been removed -------------"
+  
+  %~dp0exe\node.exe %~dp0bin\spanName_Update.js -i "%~dp0output\%%~nf\output"  -r "%~dp0output\%%~nf\report"
+  
+  echo "----------- Span Name Updated -----------"
 )
