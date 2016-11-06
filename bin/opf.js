@@ -479,6 +479,7 @@ function metaDataUpdate(){
 	metadata = metadata + '\n' + '<dc:publisher>' + publisher + '</dc:publisher>';
 	metadata = metadata + '\n' + '<dc:rights>' + rights + '</dc:rights>';
 	metadata = metadata + '\n' + '<dc:language>' + language + '</dc:language>';
+	metadata = metadata + '\n' + '<meta property="dcterms:modified">2015-09-25T01:05:00Z</meta>';
 	metadata = metadata + '\n' + '<meta property="rendition:layout">pre-paginated</meta>';
 	metadata = metadata + '\n' + '<meta property="rendition:orientation">' + orientation + '</meta>';
 	metadata = metadata + '\n' + '<meta property="rendition:spread">both</meta>';

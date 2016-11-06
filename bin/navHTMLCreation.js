@@ -24,7 +24,7 @@ fs.writeFileSync(output + '\\toc.ncx',$$$.xml());
 
 if(tocPageFound == false){
 	errorLog = errorLog + '\n' + input + ',' + 'There is no toc page Container found in the any of the html pages';
-	fs.writeFileSync(output + '\\nav.html','<?xml version="1.0" encoding="utf-8"?>' + '\n' + '<html xmlns="http://www.w3.org/1999/xhtml" xmlns:epub="http://www.idpf.org/2007/ops" xml:lang="en" lang="en">' + '\n' + '<head>' + '\n' + '<meta charset="utf-8"/>' + '\n' + '<title>' + '\n' + 'Title' + '</title>' + '\n' + '</head>' + '\n' + '<body>' + '\n' + '<nav epub:type="toc">' + '\n' + '<ol>' + '\n' + '<li><a href="html/cover.html">Cover Page</a></li>' + '\n' + '</ol>' + '</nav>' + '\n' + '</body>' + '\n' + '</html>');
+	fs.writeFileSync(output + '\\nav.xhtml','<?xml version="1.0" encoding="utf-8"?>' + '\n' + '<html xmlns="http://www.w3.org/1999/xhtml" xmlns:epub="http://www.idpf.org/2007/ops" xml:lang="en" lang="en">' + '\n' + '<head>' + '\n' + '<meta charset="utf-8"/>' + '\n' + '<title>' + '\n' + 'Title' + '</title>' + '\n' + '</head>' + '\n' + '<body>' + '\n' + '<nav epub:type="toc">' + '\n' + '<ol>' + '\n' + '<li><a href="html/cover.html">Cover Page</a></li>' + '\n' + '</ol>' + '</nav>' + '\n' + '</body>' + '\n' + '</html>');
 }
 fs.writeFileSync(reportFolder + '\\errorLog.csv',errorLog);
 
@@ -76,7 +76,7 @@ function htmlRead(htmlFilePath,htmlFile){
 				$(this).remove();
 			});
 			
-			fs.writeFileSync(output + '\\nav.html','<?xml version="1.0" encoding="utf-8"?>' + '\n' + '<html xmlns="http://www.w3.org/1999/xhtml" xmlns:epub="http://www.idpf.org/2007/ops" xml:lang="en" lang="en">' + '\n' + '<head>' + '\n' + '<meta charset="utf-8"/>' + '\n' + '<title>' + '\n' + 'Title' + '</title>' + '\n' + '</head>' + '\n' + '<body>' + '\n' + '<nav epub:type="toc">' + '\n' + '<ol>' + '\n' + $(this).html() + '\n' + '</ol>' + '</nav>' + '\n' + '</body>' + '\n' + '</html>');
+			fs.writeFileSync(output + '\\nav.xhtml','<?xml version="1.0" encoding="utf-8"?>' + '\n' + '<html xmlns="http://www.w3.org/1999/xhtml" xmlns:epub="http://www.idpf.org/2007/ops" xml:lang="en" lang="en">' + '\n' + '<head>' + '\n' + '<meta charset="utf-8"/>' + '\n' + '<title>' + '\n' + 'Title' + '</title>' + '\n' + '</head>' + '\n' + '<body>' + '\n' + '<nav epub:type="toc">' + '\n' + '<ol>' + '\n' + $(this).html() + '\n' + '</ol>' + '</nav>' + '\n' + '</body>' + '\n' + '</html>');
 		});
 	
 	});

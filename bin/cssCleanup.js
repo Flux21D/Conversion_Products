@@ -50,7 +50,7 @@ function fontFace(cssPath){
 		catch(e){}
 
 	});
-	fs.writeFileSync(cssPath.toString().replace('\\template.css','\\font.css'),finalFontLevelCSS);
+	fs.writeFileSync(cssPath.toString().replace('\\template.css','\\font.css'),'body {margin: 0px;}' + '\r\n' + finalFontLevelCSS );
 }
 
 function fontFamily(className,cssDom){
@@ -95,13 +95,8 @@ function fromDir(htmlPath, htmlFilter) {
 function cssRead(htmlFile, filename){
 	var finalCSSContent = '';
 	var content = readfile(htmlFile);
-	var matchedArray = content.toString().match(/<span class="_ _[0-9A-z]+"\/>/g);
-	//content = content.toString().replace(/<span class="_ _[0-9A-z]+"\/>/g,'');
-	if(matchedArray){
-		for(var z=0; z<matchedArray.length; z++){
-			content = content.toString().replace(matchedArray[z],matchedArray[z].toString().replace('\/>','>') + ' ' + '</span>');
-		}
-	}
+	content = content.toString().replace(/<span class="_ _[0-9A-z]+"\/>/g,'');
+	
 	var $ = cheerio.load(content);
 	$('head').find('link').each(function (ind,ele){
 		if($(this).attr('rel')){
@@ -120,10 +115,10 @@ function cssRead(htmlFile, filename){
 							divClassArray.push($(this).attr('class').split(' ')[i]);
 						}
 					}
-					$(this).attr('class','para ' + prefix + '_paraLineStyle'  + (index+1));
+					$(this).attr('class','para ' + prefix + '_para'  + (index+1));
 					var uniqueDivClassNames = divClassArray.filter( onlyUnique );
 					var LineStyles = cssCleanup(cssFile,uniqueDivClassNames,htmlFileName);
-					finalCSSContent = finalCSSContent + '\r\n' + '.' + prefix + '_paraLineStyle'  + (index+1) + ' {\r\n' + LineStyles + '\r\n}'
+					finalCSSContent = finalCSSContent + '\r\n' + '.' + prefix + '_para'  + (index+1) + ' {\r\n' + LineStyles + '\r\n}'
 				});
 				$('body').find('div#page-container').find('img').each(function (index,element){
 					var imgClassArray = [];
@@ -137,19 +132,14 @@ function cssRead(htmlFile, filename){
 				});
 				$('body').find('div#page-container').find('span').each(function (index,element){
 					var spanClassArray = [];
-					if($(this).text == ' '){
-						$(this).remove();
+					for(var i=0; i<$(this).attr('class').split(' ').length; i++){
+						spanClassArray.push($(this).attr('class').split(' ')[i]);
 					}
-					else{
-						for(var i=0; i<$(this).attr('class').split(' ').length; i++){
-							spanClassArray.push($(this).attr('class').split(' ')[i]);
-						}
-						
-						$(this).attr('class',prefix + '_wordStyle'  + (index+1));
-						var uniqueSpanClassNames = spanClassArray.filter( onlyUnique );
-						var spanStyles = cssCleanup(cssFile,uniqueSpanClassNames,htmlFileName);
-						finalCSSContent = finalCSSContent + '\r\n' + '.' + prefix + '_wordStyle'  + (index+1) + ' {\r\n' + spanStyles + '\r\n}'
-					}
+					
+					$(this).attr('class',prefix + '_wordStyle'  + (index+1));
+					var uniqueSpanClassNames = spanClassArray.filter( onlyUnique );
+					var spanStyles = cssCleanup(cssFile,uniqueSpanClassNames,htmlFileName);
+					finalCSSContent = finalCSSContent + '\r\n' + '.' + prefix + '_wordStyle'  + (index+1) + ' {\r\n' + spanStyles + '\r\n}'
 				});
 			}
 		}
